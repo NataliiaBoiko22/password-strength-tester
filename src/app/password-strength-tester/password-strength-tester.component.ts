@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-password-strength-tester',
   templateUrl: './password-strength-tester.component.html',
@@ -8,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PasswordStrengthTesterComponent {
   constructor(private fb: FormBuilder, private toastr: ToastrService) {}
+  showPassword: boolean = false;
+  eyeIcon: string = 'fa-eye-slash';
 
   passwordIsValid = false;
   form = this.fb.group({
@@ -16,7 +19,7 @@ export class PasswordStrengthTesterComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.toastr.success('Form Submitted', 'Success');
+      this.toastr.success('Your password is strong!', 'Success');
     } else {
       this.toastr.error('Form values are invalid.', 'Error');
     }
@@ -24,5 +27,11 @@ export class PasswordStrengthTesterComponent {
 
   passwordValid(event: boolean) {
     this.passwordIsValid = event;
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.showPassword
+      ? (this.eyeIcon = 'fa-eye')
+      : (this.eyeIcon = 'fa-eye-slash');
   }
 }
